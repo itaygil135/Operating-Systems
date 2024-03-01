@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/cygdrive/c/huji/OS/ex1/osm.cpp
+sys/time.h
+-
+osm.h
+/cygdrive/c/huji/OS/ex1/osm.h
+cmath
+-
+stdarg.h
+/cygdrive/c/huji/OS/ex1/stdarg.h
+stdlib.h
+/cygdrive/c/huji/OS/ex1/stdlib.h
+iostream
+/cygdrive/c/huji/OS/ex1/iostream
+stdint.h
+/cygdrive/c/huji/OS/ex1/stdint.h
+
+/cygdrive/c/huji/OS/ex1/osm.h
+

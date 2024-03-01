@@ -1,0 +1,3 @@
+/cygdrive/c/huji/OS/ex3/cmake-build-debug/CMakeFiles/ex3.dir
+/cygdrive/c/huji/OS/ex3/cmake-build-debug/CMakeFiles/edit_cache.dir
+/cygdrive/c/huji/OS/ex3/cmake-build-debug/CMakeFiles/rebuild_cache.dir

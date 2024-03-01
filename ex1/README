@@ -1,0 +1,75 @@
+Itaygil Cohenkahan, omer_mushlion
+Itay kahana(316385962), Omer Mushlion(208271197)
+EX: 1
+
+
+FILES:
+osm.cpp -- The OSM library
+
+
+REMARKS:
+
+ANSWERS:
+
+Assignment 1
+
+This code is a sequence of system calls executed by a program, which is creating a directory, a subdirectory, and a file inside the subdirectory. Then, it writes a message to the file, reads information about the timezone from the system, and finally removes the file and directories created.
+
+Here is a breakdown of each system call:
+
+mkdir("./welcome_dir_1", 0777) = 0: This creates a new directory named "welcome_dir_1" in the current directory with full permissions (0777). The function returns 0 on success, which is what we see here.
+
+mkdir("./welcome_dir_1/welcome_dir_2", 0777) = 0: This creates a subdirectory named "welcome_dir_2" inside the "welcome_dir_1" directory with full permissions. Again, the function returns 0 on success.
+
+brk(NULL) = 0x55f32d1d3000 and brk(0x55f32d1f4000) = 0x55f32d1f4000: These two system calls allocate memory to the program using the brk system call. The first call gets the current break value (end of the process's data segment), and the second call sets it to a new value.
+
+openat(AT_FDCWD, "./welcome_dir_1/welcome_dir_2/welcome_file.txt", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3: This creates a new file called "welcome_file.txt" inside the "welcome_dir_2" directory with write-only access, creating it if it doesn't exist and truncating it to zero length if it does. The file descriptor (integer value) for this file is 3.
+
+openat(AT_FDCWD, "/etc/localtime", O_RDONLY|O_CLOEXEC) = 4: This opens the system file "/etc/localtime" with read-only access and closes it automatically on execution of a new program. The file descriptor for this file is 4.
+
+fstat(4, {st_mode=S_IFREG|0644, st_size=2388, ...}) = 0: This returns information about the file descriptor 4 (in this case, "/etc/localtime"). It returns information such as file type, access permissions, and file size.
+[14:32, 4.4.2023] עומר: read(4, "TZif3\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\t\0\0\0\t\0\0\0\0"..., 4096) = 2388: This reads up to 4096 bytes from the file descriptor 4 ("/etc/localtime") into memory. In this case, it reads 2388 bytes of information about the timezone into memory.
+
+lseek(4, -1506, SEEK_CUR) = 882: This sets the file position for the file descriptor 4 ("/etc/localtime") to the current position minus 1506 bytes. This moves the file position back to read a specific portion of the file again.
+
+read(4, "TZif3\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\t\0\0\0\t\0\0\0\0"..., 4096) = 2388: This reads up to 4096 bytes from the file descriptor 4 ("/etc/localtime") into memory. In this case, it reads 2388 bytes of information about the timezone into memory.
+
+lseek(4, -1506, SEEK_CUR) = 882: This sets the file position for the file descriptor 4 ("/etc/localtime") to the current position minus 1506 bytes. This moves the file position back to read a specific portion of the file again.
+
+by order:
+
+the openat function is called with the path "./welcome_dir_1/welcome_dir_2/welcome_file.txt" to create a new file for writing with the flags O_WRONLY|O_CREAT|O_TRUNC, and permissions of 0666. The function returns file descriptor 3.
+
+the next openat function is called with the path "/etc/localtime" to open the file for reading with the flag O_RDONLY|O_CLOEXEC. The function returns file descriptor 4.
+
+ the fstat function is called with file descriptor 4 to retrieve the metadata of the opened file. The metadata is stored in a struct stat data structure pointed to by the second argument. In this case, the metadata includes the file mode, size, and other information. The function returns 0, indicating success.
+
+the fstat function is called again with file descriptor 4 to retrieve the metadata of the opened file. The function returns 0, indicating success.
+
+the read function is called with file descriptor 4 to read up to 4096 bytes from the file into a buffer. The function returns the number of bytes read, which is 2388 in this case.
+
+the lseek function is called with file descriptor 4 to set the file offset to the current position minus 1506 bytes. The SEEK_CUR argument specifies that the offset should be relative to the current file position. The function returns the new offset, which is 882 in this case.
+
+the read function is called again with file descriptor 4 to read up to 4096 bytes from the file into a buffer. The function returns the number of bytes read, which is 1506 in this case.
+
+the close function is called with file descriptor 4 to close the file.
+
+the fstat function is called with file descriptor 3 to retrieve the metadata of the file created in line 7. The metadata is stored in a struct stat data structure pointed to by the second argument. In this case, the metadata includes the file mode, size, and other information. The function returns 0, indicating success.
+
+the write function is called with file descriptor 3 to write the string "welcome to OS-2023" to the file. The function returns the number of bytes written, which is 18 in this case.
+
+the close function is called with file descriptor 3 to close the file.
+
+the unlink function is called with the path "./welcome_dir_1/welcome_dir_2/welcome_file.txt" to delete the file created in line 7. The function returns 0, indicating success.
+
+the unlink function is called with the path "./welcome_dir_1/welcome_dir_2" to delete the directory created in line 5. However, the function returns -1 with the error code EISDIR, indicating that the path refers to a directory and cannot be unlinked.
+
+the rmdir function is called with the path "./welcome_dir_1/welcome_dir_2" to remove the directory created in line 5. The function returns 0, indicating success.
+
+the unlink function is called with the path "./welcome_dir_1" to delete the directory created in line 3. However, the function returns -1 with the error code EISDIR
+
+The next two lines attempt to remove the directory created earlier. Since the directory is not empty, the first attempt to remove it using unlink fails with an error code of EISDIR, which means "Is a directory". The second attempt to remove the directory using rmdir is successful since it removes only empty directories.
+
+The last two lines are related to the program's exit. exit_group(0) is called to terminate the current process with a successful exit code of 0. Finally, the program output +++ exited with 0 +++ which indicates that the program has finished executing successfully.
+
+
